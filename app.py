@@ -116,3 +116,35 @@ if st.session_state['portfolio']:
 st.sidebar.header("Live Ticker & Volume")
 live_ticker = st.sidebar.empty()
 live_volume = st.sidebar.empty()
+
+with st.form("stock_form"):
+    ticker_input = st.text_input(
+        t("ticker_input", lang), value="AAPL, TSLA"
+    )
+    col1, col2 = st.columns(2)
+    start_date = col1.date_input(t("start_date", lang), value=date(2024, 1, 1))
+    end_date = col2.date_input(t("end_date", lang), value=date.today())
+    indicator = st.selectbox(
+        t("indicator", lang),
+        [
+            "None",
+            "SMA (20)", "EMA (20)", "Bollinger Bands (20)", "RSI (14)", "MACD",
+            "Stochastic Oscillator (14,3)", "ATR (14)", "VWAP", "Ichimoku Cloud",
+            "User-Defined"
+        ]
+    )
+    # Multi-timeframe: show translated labels, use English for logic
+    timeframe_options = ["Daily", "Weekly", "Monthly", "Intraday"]
+    timeframe_labels = [t(opt, lang) for opt in timeframe_options]
+    timeframe_label = st.selectbox("Timeframe", options=timeframe_labels, index=0)
+    # Map back to English value for logic
+    timeframe = timeframe_options[timeframe_labels.index(timeframe_label)]
+    overlay = st.text_input(
+        "Custom Overlay (pandas formula, e.g. 'Close.rolling(10).mean()')",
+        value=""
+    )
+    chart_type = st.selectbox(
+        t("chart_type", lang),
+        [t("line", lang), t("candlestick", lang), t("area", lang)]
+    )
+    submitted = st.form_submit_button(t("submit", lang))
