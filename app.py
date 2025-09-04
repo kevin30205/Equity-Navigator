@@ -35,7 +35,7 @@ def fetch_stock_data(ticker: str, start: date, end: date) -> Optional[Tuple[str,
 
 # --- UI Layout ---
 st.set_page_config(page_title="Stock Dashboard", layout="centered")
-st.title("📈 Streamlit Stock Dashboard")
+st.title("📈 Stock Dashboard")
 
 with st.form("stock_form"):
     ticker_input = st.text_input("Enter Stock Ticker (e.g., AAPL, TSLA)", value="AAPL")
@@ -43,3 +43,26 @@ with st.form("stock_form"):
     start_date = col1.date_input("Start Date", value=date(2024, 1, 1))
     end_date = col2.date_input("End Date", value=date.today())
     submitted = st.form_submit_button("Go")
+
+if submitted:
+    result = fetch_stock_data(ticker_input, start_date, end_date)
+    if not result:
+        st.error("Invalid Ticker or No Data Available for Selected Range.")
+    else:
+        ticker, hist = result
+        # --- Key Metrics ---
+        current_close = hist['Close'][-1]
+        start_close = hist['Close'][0]
+        pct_change = ((current_close - start_close) / start_close) * 100
+        high = hist['Close'].max()
+        low = hist['Close'].min()
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Current Close", f"${current_close:,.2f}")
+        col2.metric("% Change", f"{pct_change:.2f}%")
+        col3.metric("High / Low", f"${high:,.2f} / ${low:,.2f}")
+
+        # --- Line Chart ---
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=hist.index, y=hist['Close'], mode='lines', name='Close'))
+        fig.update_layout(title=f"{ticker} Closing Price", xaxis_title="Date", yaxis_title="Price (USD)", template="plotly_white")
+        st.plotly_chart(fig, use_container_width=True)
