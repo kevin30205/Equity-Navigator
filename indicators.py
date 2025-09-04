@@ -28,3 +28,25 @@ def add_vwap(df: pd.DataFrame) -> pd.Series:
     """Volume Weighted Average Price (VWAP)"""
     vwap = (df['Close'] * df['Volume']).cumsum() / df['Volume'].cumsum()
     return vwap
+
+
+def add_ichimoku(df: pd.DataFrame) -> Dict[str, pd.Series]:
+    """Ichimoku Cloud"""
+    high9 = df['High'].rolling(window=9).max()
+    low9 = df['Low'].rolling(window=9).min()
+    tenkan_sen = (high9 + low9) / 2
+    high26 = df['High'].rolling(window=26).max()
+    low26 = df['Low'].rolling(window=26).min()
+    kijun_sen = (high26 + low26) / 2
+    senkou_span_a = ((tenkan_sen + kijun_sen) / 2).shift(26)
+    high52 = df['High'].rolling(window=52).max()
+    low52 = df['Low'].rolling(window=52).min()
+    senkou_span_b = ((high52 + low52) / 2).shift(26)
+    chikou_span = df['Close'].shift(-26)
+    return {
+        'tenkan_sen': tenkan_sen,
+        'kijun_sen': kijun_sen,
+        'senkou_span_a': senkou_span_a,
+        'senkou_span_b': senkou_span_b,
+        'chikou_span': chikou_span
+    }
