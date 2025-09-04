@@ -189,3 +189,9 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
             except Exception:
                 continue
         return data
+    if timeframe == "Intraday":
+        data = fetch_live_data(tickers, interval="1m")
+        port_data = fetch_live_data(port_tickers, interval="1m") if port_tickers else {}
+    else:
+        data = fetch_stock_data_multi_timeframe(tickers, start_date, end_date, interval)
+        port_data = fetch_stock_data_multi_timeframe(port_tickers, start_date, end_date, interval) if port_tickers else {}
