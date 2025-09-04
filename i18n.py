@@ -15,7 +15,7 @@ LANGUAGES = {
 # Translation dictionary
 TRANSLATIONS: Dict[str, Dict[str, str]] = {
     "en": {
-        "title": "📈 Stock Dashboard",
+        "title": "📈 Equity Navigator",
         "ticker_input": "Enter Stock Ticker(s) (comma or space separated, e.g., AAPL, TSLA, MSFT)",
         "start_date": "Start Date",
         "end_date": "End Date",
