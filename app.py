@@ -162,3 +162,17 @@ def fetch_live_data(tickers: List[str], interval: str = "1m") -> Dict[str, pd.Da
         except Exception:
             continue
     return data
+
+if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
+    # Parse tickers
+    tickers = [t.strip() for t in ticker_input.replace(',', ' ').split() if t.strip()]
+    # Portfolio tickers
+    port_tickers = [item['ticker'] for item in st.session_state['portfolio']]
+    # Multi-timeframe support
+    interval_map = {
+        "Daily": "1d",
+        "Weekly": "1wk",
+        "Monthly": "1mo",
+        "Intraday": "15m"
+    }
+    interval = interval_map.get(timeframe, "1d")
