@@ -148,3 +148,17 @@ with st.form("stock_form"):
         [t("line", lang), t("candlestick", lang), t("area", lang)]
     )
     submitted = st.form_submit_button(t("submit", lang))
+
+@st.cache_data(show_spinner=True)
+def fetch_live_data(tickers: List[str], interval: str = "1m") -> Dict[str, pd.DataFrame]:
+    data = {}
+    for ticker in tickers:
+        try:
+            t = ticker.upper().strip()
+            stock = yf.Ticker(t)
+            hist = stock.history(period="1d", interval=interval)
+            if not hist.empty:
+                data[t] = hist
+        except Exception:
+            continue
+    return data
