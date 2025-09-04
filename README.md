@@ -48,22 +48,39 @@ Key components:
 ## Project Structure
 
 ```
-./Equity-Navigator
+./Stock-Dashboard
+├── src/
+│   ├── data_fetching/
+│   │   ├── historical_data.py
+│   │   └── live_data.py
+│   ├── dashboard.py
+│   ├── i18n.py
+│   ├── indicators.py
+│   ├── portfolio.py
+│   ├── stock_events.py
+│   └── visualization.py
+├── .gitignore
 ├── app.py
-├── i18n.py
-├── indicators.py
 ├── LICENSE
 ├── README.md
-├── requirements.txt
-└── stock_events.py
+└── requirements.txt
 ```
 
-- **app.py**: Main Streamlit application script. Implements the dashboard logic, user interface, and data visualization.
-- **i18n.py**: Internationalization and language support.
-- **indicators.py**: Implements advanced technical indicators and user-defined overlays.
-- **stock_events.py**: Fetches and formats significant stock events for chart annotation.
-- **README.md**: Project documentation. Provides an overview, setup instructions, and usage guidelines.
+- **src/**: Source code for all dashboard modules.
+    - **data_fetching/**: Data retrieval modules.
+        - **historical_data.py**: Fetches historical stock data for multiple tickers and timeframes.
+        - **live_data.py**: Fetches live/intraday stock data.
+    - **dashboard.py**: Streamlit dashboard layout, configuration, and UI logic.
+    - **i18n.py**: Internationalization and language support.
+    - **indicators.py**: Advanced technical indicators and user-defined overlays.
+    - **portfolio.py**: Portfolio management, performance, allocation, and risk metrics.
+    - **stock_events.py**: Fetches and formats significant stock events for chart annotation.
+    - **visualization.py**: Chart rendering and key metrics display.
+- **.gitignore**: Specifies files and directories to be ignored by Git version control.
+- **LICENSE**: Contains the project's license information (Apache License 2.0).
+- **README.md**: Project documentation, including overview, setup, and usage instructions.
 - **requirements.txt**: Lists Python dependencies required to run the application.
+- **app.py**: Main Streamlit application script, orchestrates dashboard logic, UI, and data visualization.
 
 ## Installation
 
