@@ -419,3 +419,10 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
             fig_macd.add_trace(go.Scatter(x=hist.index, y=signal, mode='lines', name=f"{ticker} Signal"))
         fig_macd.update_layout(title="MACD Comparison", xaxis_title="Date", yaxis_title="MACD", template="plotly_white", margin=dict(l=40, r=40, t=40, b=20))
         st.plotly_chart(fig_macd, use_container_width=True)
+
+    # --- Volume Chart: Trading Volume (Stacked) ---
+    fig_volume = go.Figure()
+    for ticker, hist in data.items():
+        fig_volume.add_trace(go.Bar(x=hist.index, y=hist['Volume'], name=ticker, marker_color=None))
+    fig_volume.update_layout(barmode='stack', title="Trading Volume Comparison", xaxis_title="Date", yaxis_title="Volume", template="plotly_white", margin=dict(l=40, r=40, t=40, b=20))
+    st.plotly_chart(fig_volume, use_container_width=True)
