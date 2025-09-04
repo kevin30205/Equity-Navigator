@@ -20,3 +20,7 @@ from indicators import (
 def add_sma(df: pd.DataFrame, window: int = 20) -> pd.Series:
     """Simple Moving Average"""
     return df['Close'].rolling(window=window).mean()
+
+def add_ema(df: pd.DataFrame, window: int = 20) -> pd.Series:
+    """Exponential Moving Average"""
+    return df['Close'].ewm(span=window, adjust=False).mean()
