@@ -95,3 +95,7 @@ streamlit run app.py
 - Use the sidebar to add tickers and quantities to your virtual portfolio.
 - View your current portfolio, allocation pie chart, total value, and risk metrics (volatility, beta).
 - Clear the portfolio at any time using the sidebar button.
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
