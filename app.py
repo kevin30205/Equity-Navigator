@@ -195,3 +195,16 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
     else:
         data = fetch_stock_data_multi_timeframe(tickers, start_date, end_date, interval)
         port_data = fetch_stock_data_multi_timeframe(port_tickers, start_date, end_date, interval) if port_tickers else {}
+    if not data and not port_data:
+        st.error(t("error_no_data", lang))
+    else:
+        # --- Live Ticker & Volume Display ---
+        if timeframe == "Intraday":
+            ticker_info = []
+            for ticker, hist in data.items():
+                last_row = hist.iloc[-1]
+                price = last_row['Close']
+                volume = last_row['Volume']
+                ticker_info.append(f"{ticker}: ${price:,.2f} | Vol: {volume:,}")
+            live_ticker.markdown("**Live Prices:**<br>" + "<br>".join(ticker_info), unsafe_allow_html=True)
+            live_volume.markdown("**Streaming Volume:**<br>" + "<br>".join([f"{ticker}: {hist.iloc[-1]['Volume']:,}" for ticker, hist in data.items()]), unsafe_allow_html=True)
