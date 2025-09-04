@@ -37,3 +37,10 @@ The Equity Navigator is a web application that enables users to fetch and visual
 ## Project Architecture
 
 The application is a single-page Streamlit app. User inputs are processed in real-time, data is fetched from Yahoo Finance via yfinance, and results are displayed using Streamlit widgets and Plotly charts. All logic is contained in a single Python script (`app.py`).
+
+Key components:
+
+- **Data Fetching:** Retrieves historical data for stocks and ETFs using yfinance, supporting multiple tickers and timeframes (daily, weekly, monthly, intraday).
+- **Analytics & Charting:** Calculates and overlays technical indicators (SMA, EMA, RSI, MACD, Bollinger Bands, Stochastic Oscillator, ATR, VWAP, Ichimoku Cloud) and supports user-defined formulas. Comparison charts allow analysis across asset classes.
+- **Visualization:** Interactive charts (line, candlestick, area) and volume bar charts for selected tickers and timeframes. Event annotations (earnings, splits) are displayed on price charts.
+- **User Interface:** Streamlit widgets for input, indicator selection, timeframe, overlays, and downloads. Multi-language support via i18n.
