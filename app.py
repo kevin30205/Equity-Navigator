@@ -81,3 +81,13 @@ def fetch_stock_data_multi(tickers: List[str], start: date, end: date) -> Dict[s
 st_autorefresh = getattr(st, "autorefresh", None)
 if st_autorefresh:
     st_autorefresh(interval=10000, key="realtime_refresh")  # 10s refresh
+
+
+# --- Language Selector ---
+if 'lang' not in st.session_state:
+    st.session_state['lang'] = 'en'
+lang = st.selectbox("🌐 Language", options=list(LANGUAGES.keys()), format_func=lambda x: LANGUAGES[x], index=list(LANGUAGES.keys()).index(st.session_state['lang']))
+st.session_state['lang'] = lang
+
+st.set_page_config(page_title=t("title", lang), layout="wide")
+st.title(t("title", lang))
