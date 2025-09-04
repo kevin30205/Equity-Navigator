@@ -176,3 +176,16 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
         "Intraday": "15m"
     }
     interval = interval_map.get(timeframe, "1d")
+    @st.cache_data(show_spinner=True)
+    def fetch_stock_data_multi_timeframe(tickers: List[str], start: date, end: date, interval: str) -> Dict[str, pd.DataFrame]:
+        data = {}
+        for ticker in tickers:
+            try:
+                t = ticker.upper().strip()
+                stock = yf.Ticker(t)
+                hist = stock.history(start=start, end=end, interval=interval)
+                if not hist.empty:
+                    data[t] = hist
+            except Exception:
+                continue
+        return data
