@@ -340,3 +340,33 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
         elif chart_type == "Candlestick":
             if {'Open', 'High', 'Low', 'Close'}.issubset(hist.columns):
                 fig_price.add_trace(go.Candlestick(x=hist.index, open=hist['Open'], high=hist['High'], low=hist['Low'], close=hist['Close'], name=ticker))
+        # Indicator overlays
+        if indicator == "SMA (20)":
+            fig_price.add_trace(go.Scatter(x=hist.index, y=add_sma(hist, 20), mode='lines', name=f"{ticker} SMA(20)", line=dict(dash='dash')))
+        elif indicator == "EMA (20)":
+            fig_price.add_trace(go.Scatter(x=hist.index, y=add_ema(hist, 20), mode='lines', name=f"{ticker} EMA(20)", line=dict(dash='dot')))
+        elif indicator == "Bollinger Bands (20)":
+            upper, lower = add_bollinger(hist, 20)
+            fig_price.add_trace(go.Scatter(x=hist.index, y=upper, mode='lines', name=f"{ticker} Bollinger Upper", line=dict(color='rgba(0,100,200,0.3)', dash='dot')))
+            fig_price.add_trace(go.Scatter(x=hist.index, y=lower, mode='lines', name=f"{ticker} Bollinger Lower", line=dict(color='rgba(200,100,0,0.3)', dash='dot')))
+        elif indicator == "Stochastic Oscillator (14,3)":
+            k, d = add_stochastic(hist, 14, 3)
+            fig_price.add_trace(go.Scatter(x=hist.index, y=k, mode='lines', name=f"{ticker} %K"))
+            fig_price.add_trace(go.Scatter(x=hist.index, y=d, mode='lines', name=f"{ticker} %D"))
+        elif indicator == "ATR (14)":
+            atr = add_atr(hist, 14)
+            fig_price.add_trace(go.Scatter(x=hist.index, y=atr, mode='lines', name=f"{ticker} ATR(14)", line=dict(dash='dot')))
+        elif indicator == "VWAP":
+            vwap = add_vwap(hist)
+            fig_price.add_trace(go.Scatter(x=hist.index, y=vwap, mode='lines', name=f"{ticker} VWAP", line=dict(dash='dash')))
+        elif indicator == "Ichimoku Cloud":
+            ichimoku = add_ichimoku(hist)
+            fig_price.add_trace(go.Scatter(x=hist.index, y=ichimoku['tenkan_sen'], mode='lines', name=f"{ticker} Tenkan-sen"))
+            fig_price.add_trace(go.Scatter(x=hist.index, y=ichimoku['kijun_sen'], mode='lines', name=f"{ticker} Kijun-sen"))
+            fig_price.add_trace(go.Scatter(x=hist.index, y=ichimoku['senkou_span_a'], mode='lines', name=f"{ticker} Senkou Span A"))
+            fig_price.add_trace(go.Scatter(x=hist.index, y=ichimoku['senkou_span_b'], mode='lines', name=f"{ticker} Senkou Span B"))
+            fig_price.add_trace(go.Scatter(x=hist.index, y=ichimoku['chikou_span'], mode='lines', name=f"{ticker} Chikou Span"))
+        elif indicator == "User-Defined" and overlay:
+            user_series = add_user_indicator(hist, overlay)
+            if user_series is not None:
+                fig_price.add_trace(go.Scatter(x=hist.index, y=user_series, mode='lines', name=f"{ticker} Custom Overlay", line=dict(dash='dot')))
