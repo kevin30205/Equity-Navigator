@@ -1,4 +1,4 @@
-# Additional technical indicators and overlays for Stock Dashboard
+# Additional technical indicators and overlays for Equity Navigator
 # Implements: Stochastic Oscillator, ATR, VWAP, Ichimoku Cloud, and user-defined indicator support
 
 import pandas as pd
