@@ -208,3 +208,20 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
                 ticker_info.append(f"{ticker}: ${price:,.2f} | Vol: {volume:,}")
             live_ticker.markdown("**Live Prices:**<br>" + "<br>".join(ticker_info), unsafe_allow_html=True)
             live_volume.markdown("**Streaming Volume:**<br>" + "<br>".join([f"{ticker}: {hist.iloc[-1]['Volume']:,}" for ticker, hist in data.items()]), unsafe_allow_html=True)
+        # --- Key Metrics Table ---
+        st.subheader(t("key_metrics", lang))
+        metrics = []
+        for ticker, hist in data.items():
+            current_close = hist['Close'][-1]
+            start_close = hist['Close'][0]
+            pct_change = ((current_close - start_close) / start_close) * 100
+            high = hist['Close'].max()
+            low = hist['Close'].min()
+            metrics.append({
+                t("current_close", lang): f"${current_close:,.2f}",
+                t("pct_change", lang): f"{pct_change:.2f}%",
+                t("high_low", lang): f"${high:,.2f} / ${low:,.2f}",
+                "Ticker": ticker
+            })
+        metrics_df = pd.DataFrame(metrics)
+        st.dataframe(metrics_df)
