@@ -41,3 +41,11 @@ def add_macd(df: pd.DataFrame) -> Tuple[pd.Series, pd.Series]:
     macd = ema12 - ema26
     signal = macd.ewm(span=9, adjust=False).mean()
     return macd, signal
+
+def add_bollinger(df: pd.DataFrame, window: int = 20) -> Tuple[pd.Series, pd.Series]:
+    """Bollinger Bands"""
+    sma = add_sma(df, window)
+    std = df['Close'].rolling(window=window).std()
+    upper = sma + 2 * std
+    lower = sma - 2 * std
+    return upper, lower
