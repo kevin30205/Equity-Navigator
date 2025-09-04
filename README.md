@@ -10,31 +10,14 @@ The Equity Navigator is a web application that enables users to fetch and visual
 - Select a custom date range
 - Display key metrics: current closing price, percentage change, high/low
 - Interactive line chart of daily closing prices
-
-## Technology Stack
-
-- **Frontend & Backend:**
-  - Python 3.8+
-  - Streamlit >=1.30.0
-- **Data Fetching:**
-  - yfinance >=0.2.36
-- **Visualization:**
-  - plotly >=5.20.0
-
-## Project Architecture
-
-The application is a single-page Streamlit app. User inputs are processed in real-time, data is fetched from Yahoo Finance via yfinance, and results are displayed using Streamlit widgets and Plotly charts. All logic is contained in a single Python script (`app.py`).
-
-## Project Structure
-
-```
-./Equity Navigator
-├── app.py
-├── LICENSE
-├── README.md
-└── requirements.txt
-```
-
-- **app.py**: Main Streamlit application script. Implements the dashboard logic, user interface, and data visualization.
-- **README.md**: Project documentation. Provides an overview, setup instructions, and usage guidelines.
-- **requirements.txt**: Lists Python dependencies required to run the application.
+- Volume Chart: Bar chart of trading volume for the selected date range
+- Multiple Ticker Comparison: Input and compare multiple stock tickers on the same chart
+- Advanced Technical Indicators: SMA, EMA, RSI, MACD, Bollinger Bands, Stochastic Oscillator, ATR, VWAP, Ichimoku Cloud
+- Multi-Timeframe Analysis: Analyze data in daily, weekly, monthly, and intraday intervals
+- Real-Time & Intraday Data: Live price updates, intraday charting, and streaming volume display
+- Live Ticker Panel: Sidebar shows live prices and streaming volume for selected tickers
+- Portfolio Management: Create and track virtual portfolios, view performance, allocation, and risk metrics
+- Custom Overlays: Add user-defined indicator formulas using pandas syntax
+- Asset Class Comparison: Compare stocks and ETFs on the same chart
+- Download Data: Download displayed key metrics and historical data as CSV files
+- Customizable Chart Types: Choose between line, candlestick, or area charts for price visualization
