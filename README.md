@@ -21,3 +21,15 @@ The Equity Navigator is a web application that enables users to fetch and visual
 - Asset Class Comparison: Compare stocks and ETFs on the same chart
 - Download Data: Download displayed key metrics and historical data as CSV files
 - Customizable Chart Types: Choose between line, candlestick, or area charts for price visualization
+
+## Technology Stack
+
+- **Frontend & Backend:**
+  - Python 3.8+
+  - Streamlit >=1.30.0
+- **Data Fetching:**
+  - yfinance >=0.2.36
+- **Visualization:**
+  - plotly >=5.20.0
+- **Technical Analysis:**
+  - pandas_ta >=0.3.14
