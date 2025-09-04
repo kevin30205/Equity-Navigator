@@ -44,3 +44,23 @@ Key components:
 - **Analytics & Charting:** Calculates and overlays technical indicators (SMA, EMA, RSI, MACD, Bollinger Bands, Stochastic Oscillator, ATR, VWAP, Ichimoku Cloud) and supports user-defined formulas. Comparison charts allow analysis across asset classes.
 - **Visualization:** Interactive charts (line, candlestick, area) and volume bar charts for selected tickers and timeframes. Event annotations (earnings, splits) are displayed on price charts.
 - **User Interface:** Streamlit widgets for input, indicator selection, timeframe, overlays, and downloads. Multi-language support via i18n.
+
+## Project Structure
+
+```
+./Equity-Navigator
+├── app.py
+├── i18n.py
+├── indicators.py
+├── LICENSE
+├── README.md
+├── requirements.txt
+└── stock_events.py
+```
+
+- **app.py**: Main Streamlit application script. Implements the dashboard logic, user interface, and data visualization.
+- **i18n.py**: Internationalization and language support.
+- **indicators.py**: Implements advanced technical indicators and user-defined overlays.
+- **stock_events.py**: Fetches and formats significant stock events for chart annotation.
+- **README.md**: Project documentation. Provides an overview, setup instructions, and usage guidelines.
+- **requirements.txt**: Lists Python dependencies required to run the application.
