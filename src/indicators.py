@@ -1,8 +1,49 @@
-# Additional technical indicators and overlays for Equity Navigator
-# Implements: Stochastic Oscillator, ATR, VWAP, Ichimoku Cloud, and user-defined indicator support
+"""
+Additional technical indicators and overlays for Equity Navigator
+Implements: Stochastic Oscillator, ATR, VWAP, Ichimoku Cloud, and user-defined indicator support
+"""
 
 import pandas as pd
-from typing import Optional, Tuple, Dict, Any
+from typing import Optional, Tuple, Dict
+
+
+# --- Indicator Functions ---
+def add_sma(df: pd.DataFrame, window: int = 20) -> pd.Series:
+    """Simple Moving Average"""
+    return df['Close'].rolling(window=window).mean()
+
+
+def add_ema(df: pd.DataFrame, window: int = 20) -> pd.Series:
+    """Exponential Moving Average"""
+    return df['Close'].ewm(span=window, adjust=False).mean()
+
+
+def add_rsi(df: pd.DataFrame, window: int = 14) -> pd.Series:
+    """Relative Strength Index"""
+    delta = df['Close'].diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
+    rs = gain / loss
+    rsi = 100 - (100 / (1 + rs))
+    return rsi
+
+
+def add_macd(df: pd.DataFrame) -> Tuple[pd.Series, pd.Series]:
+    """MACD and Signal Line"""
+    ema12 = df['Close'].ewm(span=12, adjust=False).mean()
+    ema26 = df['Close'].ewm(span=26, adjust=False).mean()
+    macd = ema12 - ema26
+    signal = macd.ewm(span=9, adjust=False).mean()
+    return macd, signal
+
+
+def add_bollinger(df: pd.DataFrame, window: int = 20) -> Tuple[pd.Series, pd.Series]:
+    """Bollinger Bands"""
+    sma = add_sma(df, window)
+    std = df['Close'].rolling(window=window).std()
+    upper = sma + 2 * std
+    lower = sma - 2 * std
+    return upper, lower
 
 
 def add_stochastic(df: pd.DataFrame, k_window: int = 14, d_window: int = 3) -> Tuple[pd.Series, pd.Series]:
