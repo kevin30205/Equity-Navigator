@@ -22,3 +22,9 @@ def add_atr(df: pd.DataFrame, window: int = 14) -> pd.Series:
     tr = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
     atr = tr.rolling(window=window).mean()
     return atr
+
+
+def add_vwap(df: pd.DataFrame) -> pd.Series:
+    """Volume Weighted Average Price (VWAP)"""
+    vwap = (df['Close'] * df['Volume']).cumsum() / df['Volume'].cumsum()
+    return vwap
