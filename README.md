@@ -20,3 +20,7 @@ The Equity Navigator is a web application that enables users to fetch and visual
   - yfinance >=0.2.36
 - **Visualization:**
   - plotly >=5.20.0
+
+## Project Architecture
+
+The application is a single-page Streamlit app. User inputs are processed in real-time, data is fetched from Yahoo Finance via yfinance, and results are displayed using Streamlit widgets and Plotly charts. All logic is contained in a single Python script (`app.py`).
