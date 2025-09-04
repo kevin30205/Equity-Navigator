@@ -75,3 +75,23 @@ Key components:
 
     pip install -r requirements.txt
    ```
+
+## Usage
+
+1. Run the Streamlit app:
+
+```bash
+streamlit run app.py
+```
+
+2. Open the provided local URL in your browser.
+3. Enter one or more stock tickers (comma or space separated), select dates, and click "Go" to view results.
+4. The dashboard will display a table of key metrics for all valid tickers, a closing price comparison chart, and a stacked trading volume bar chart for the selected date range.
+5. Select a technical indicator from the dropdown to overlay moving averages or display RSI, MACD, or Bollinger Bands for the selected tickers.
+6. Use the download buttons to export key metrics and historical data for all selected tickers as CSV files.
+7. Select a chart type (line, candlestick, or area) to customize the price visualization for all selected tickers.
+8. **Portfolio Management:**
+
+- Use the sidebar to add tickers and quantities to your virtual portfolio.
+- View your current portfolio, allocation pie chart, total value, and risk metrics (volatility, beta).
+- Clear the portfolio at any time using the sidebar button.
