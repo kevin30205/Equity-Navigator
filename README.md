@@ -10,3 +10,13 @@ The Equity Navigator is a web application that enables users to fetch and visual
 - Select a custom date range
 - Display key metrics: current closing price, percentage change, high/low
 - Interactive line chart of daily closing prices
+
+## Technology Stack
+
+- **Frontend & Backend:**
+  - Python 3.8+
+  - Streamlit >=1.30.0
+- **Data Fetching:**
+  - yfinance >=0.2.36
+- **Visualization:**
+  - plotly >=5.20.0
