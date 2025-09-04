@@ -409,3 +409,13 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
             fig_rsi.add_trace(go.Scatter(x=hist.index, y=add_rsi(hist, 14), mode='lines', name=f"{ticker} RSI(14)"))
         fig_rsi.update_layout(title="RSI (14) Comparison", xaxis_title="Date", yaxis_title="RSI", template="plotly_white", margin=dict(l=40, r=40, t=40, b=20), yaxis=dict(range=[0, 100]))
         st.plotly_chart(fig_rsi, use_container_width=True)
+
+    # --- MACD Chart ---
+    if indicator == "MACD":
+        fig_macd = go.Figure()
+        for ticker, hist in data.items():
+            macd, signal = add_macd(hist)
+            fig_macd.add_trace(go.Scatter(x=hist.index, y=macd, mode='lines', name=f"{ticker} MACD"))
+            fig_macd.add_trace(go.Scatter(x=hist.index, y=signal, mode='lines', name=f"{ticker} Signal"))
+        fig_macd.update_layout(title="MACD Comparison", xaxis_title="Date", yaxis_title="MACD", template="plotly_white", margin=dict(l=40, r=40, t=40, b=20))
+        st.plotly_chart(fig_macd, use_container_width=True)
