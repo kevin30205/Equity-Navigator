@@ -64,3 +64,14 @@ Key components:
 - **stock_events.py**: Fetches and formats significant stock events for chart annotation.
 - **README.md**: Project documentation. Provides an overview, setup instructions, and usage guidelines.
 - **requirements.txt**: Lists Python dependencies required to run the application.
+
+## Installation
+
+1. Install dependencies:
+
+   ```bash
+    conda create --name equity_navigator python=3.10
+    conda activate equity_navigator
+
+    pip install -r requirements.txt
+   ```
