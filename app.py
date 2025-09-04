@@ -49,3 +49,29 @@ def add_bollinger(df: pd.DataFrame, window: int = 20) -> Tuple[pd.Series, pd.Ser
     upper = sma + 2 * std
     lower = sma - 2 * std
     return upper, lower
+
+# --- Helper Functions ---
+@st.cache_data(show_spinner=True)
+def fetch_stock_data_multi(tickers: List[str], start: date, end: date) -> Dict[str, pd.DataFrame]:
+    """
+    Fetch historical stock data for multiple tickers and a date range.
+
+    Args:
+        tickers (List[str]): List of stock ticker symbols.
+        start (date): Start date.
+        end (date): End date.
+
+    Returns:
+        Dict[str, pd.DataFrame]: Dictionary mapping ticker to its DataFrame (only valid tickers).
+    """
+    data = {}
+    for ticker in tickers:
+        try:
+            t = ticker.upper().strip()
+            stock = yf.Ticker(t)
+            hist = stock.history(start=start, end=end)
+            if not hist.empty:
+                data[t] = hist
+        except Exception:
+            continue
+    return data
