@@ -314,3 +314,16 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
                 "mime": "text/csv",
                 "key": f"download_{ticker}_history_2"
             })
+
+        # Display buttons in rows of max 3 per row
+        for i in range(0, len(download_buttons), 3):
+            cols = st.columns(3)
+            for j, btn in enumerate(download_buttons[i:i+3]):
+                with cols[j]:
+                    st.download_button(
+                        label=btn["label"],
+                        data=btn["data"],
+                        file_name=btn["file_name"],
+                        mime=btn["mime"],
+                        key=btn["key"]
+                    )
