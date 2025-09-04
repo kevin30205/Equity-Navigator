@@ -327,3 +327,16 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
                         mime=btn["mime"],
                         key=btn["key"]
                     )
+
+        # --- Customizable Chart: Closing Prices + Indicators ---
+    fig_price = go.Figure()
+    for ticker, hist in data.items():
+        events = get_stock_events(ticker, pd.to_datetime(start_date), pd.to_datetime(end_date))
+        # Chart type
+        if chart_type == "Line":
+            fig_price.add_trace(go.Scatter(x=hist.index, y=hist['Close'], mode='lines', name=ticker))
+        elif chart_type == "Area":
+            fig_price.add_trace(go.Scatter(x=hist.index, y=hist['Close'], mode='lines', name=ticker, fill='tozeroy'))
+        elif chart_type == "Candlestick":
+            if {'Open', 'High', 'Low', 'Close'}.issubset(hist.columns):
+                fig_price.add_trace(go.Candlestick(x=hist.index, open=hist['Open'], high=hist['High'], low=hist['Low'], close=hist['Close'], name=ticker))
