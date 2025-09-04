@@ -33,3 +33,11 @@ def add_rsi(df: pd.DataFrame, window: int = 14) -> pd.Series:
     rs = gain / loss
     rsi = 100 - (100 / (1 + rs))
     return rsi
+
+def add_macd(df: pd.DataFrame) -> Tuple[pd.Series, pd.Series]:
+    """MACD and Signal Line"""
+    ema12 = df['Close'].ewm(span=12, adjust=False).mean()
+    ema26 = df['Close'].ewm(span=26, adjust=False).mean()
+    macd = ema12 - ema26
+    signal = macd.ewm(span=9, adjust=False).mean()
+    return macd, signal
