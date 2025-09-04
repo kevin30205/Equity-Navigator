@@ -75,3 +75,9 @@ def fetch_stock_data_multi(tickers: List[str], start: date, end: date) -> Dict[s
         except Exception:
             continue
     return data
+
+
+# --- Real-Time & Intraday Data ---
+st_autorefresh = getattr(st, "autorefresh", None)
+if st_autorefresh:
+    st_autorefresh(interval=10000, key="realtime_refresh")  # 10s refresh
