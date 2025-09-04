@@ -102,3 +102,12 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
     "Intraday": "Intradía"
     }
 }
+
+def t(key: str, lang: str = "en", **kwargs) -> str:
+    """
+    Translate a key to the selected language.
+    """
+    text = TRANSLATIONS.get(lang, TRANSLATIONS["en"]).get(key, key)
+    if kwargs:
+        return text.format(**kwargs)
+    return text
