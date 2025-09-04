@@ -91,3 +91,28 @@ st.session_state['lang'] = lang
 
 st.set_page_config(page_title=t("title", lang), layout="wide")
 st.title(t("title", lang))
+
+
+# --- Portfolio Management Sidebar ---
+st.sidebar.header("Portfolio Management")
+if 'portfolio' not in st.session_state:
+    st.session_state['portfolio'] = []
+
+with st.sidebar.form("portfolio_form"):
+    st.write("Add asset to portfolio:")
+    port_ticker = st.text_input("Ticker", value="AAPL")
+    port_qty = st.number_input("Quantity", min_value=1, value=10)
+    port_add = st.form_submit_button("Add to Portfolio")
+if port_add and port_ticker:
+    st.session_state['portfolio'].append({"ticker": port_ticker.upper().strip(), "quantity": port_qty})
+
+if st.sidebar.button("Clear Portfolio"):
+    st.session_state['portfolio'] = []
+
+st.sidebar.write("Current Portfolio:")
+if st.session_state['portfolio']:
+    st.sidebar.table(pd.DataFrame(st.session_state['portfolio']))
+
+st.sidebar.header("Live Ticker & Volume")
+live_ticker = st.sidebar.empty()
+live_volume = st.sidebar.empty()
