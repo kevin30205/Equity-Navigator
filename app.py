@@ -278,3 +278,39 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
                         st.write(f"**Portfolio Beta (vs. S&P 500):** {beta:.2f}")
                 except Exception:
                     st.write("Beta calculation unavailable.")
+
+        # --- Download Buttons ---
+        st.markdown(f"### {t('download_data', lang)}")
+        # Prepare download buttons (key metrics + each ticker's historical data)
+        download_buttons = []
+        csv_metrics = metrics_df.to_csv(index=False).encode('utf-8')
+        download_buttons.append({
+            "label": t("download_key_metrics", lang),
+            "data": csv_metrics,
+            "file_name": "key_metrics.csv",
+            "mime": "text/csv",
+            "key": "download_key_metrics_1"
+        })
+        download_buttons.append({
+            "label": t("download_key_metrics", lang),
+            "data": csv_metrics,
+            "file_name": "key_metrics.csv",
+            "mime": "text/csv",
+            "key": "download_key_metrics_2"
+        })
+        for ticker, hist in data.items():
+            csv_hist = hist.to_csv().encode('utf-8')
+            download_buttons.append({
+                "label": t("download_history", lang, ticker=ticker),
+                "data": csv_hist,
+                "file_name": f"{ticker}_history.csv",
+                "mime": "text/csv",
+                "key": f"download_{ticker}_history_1"
+            })
+            download_buttons.append({
+                "label": t("download_history", lang, ticker=ticker),
+                "data": csv_hist,
+                "file_name": f"{ticker}_history.csv",
+                "mime": "text/csv",
+                "key": f"download_{ticker}_history_2"
+            })
