@@ -401,3 +401,11 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
         margin=dict(l=40, r=40, t=40, b=20)
     )
     st.plotly_chart(fig_price, use_container_width=True)
+
+    # --- RSI Chart ---
+    if indicator == "RSI (14)":
+        fig_rsi = go.Figure()
+        for ticker, hist in data.items():
+            fig_rsi.add_trace(go.Scatter(x=hist.index, y=add_rsi(hist, 14), mode='lines', name=f"{ticker} RSI(14)"))
+        fig_rsi.update_layout(title="RSI (14) Comparison", xaxis_title="Date", yaxis_title="RSI", template="plotly_white", margin=dict(l=40, r=40, t=40, b=20), yaxis=dict(range=[0, 100]))
+        st.plotly_chart(fig_rsi, use_container_width=True)
