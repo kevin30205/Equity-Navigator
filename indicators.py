@@ -50,3 +50,24 @@ def add_ichimoku(df: pd.DataFrame) -> Dict[str, pd.Series]:
         'senkou_span_b': senkou_span_b,
         'chikou_span': chikou_span
     }
+
+
+def add_user_indicator(df: pd.DataFrame, formula: str) -> Optional[pd.Series]:
+    """
+    Evaluate a user-defined indicator formula safely.
+    Args:
+        df (pd.DataFrame): Stock data.
+        formula (str): Formula using pandas syntax, e.g. 'Close.rolling(10).mean()'.
+    Returns:
+        Optional[pd.Series]: Resulting indicator series, or None if invalid.
+    """
+    allowed_names = {'Close', 'Open', 'High', 'Low', 'Volume'}
+    try:
+        # Only allow access to columns, no builtins or globals
+        local_dict = {col: df[col] for col in allowed_names if col in df.columns}
+        result = eval(formula, {"__builtins__": None}, local_dict)
+        if isinstance(result, pd.Series):
+            return result
+    except Exception:
+        return None
+    return None
