@@ -370,3 +370,34 @@ if submitted or timeframe == "Intraday" or st.session_state['portfolio']:
             user_series = add_user_indicator(hist, overlay)
             if user_series is not None:
                 fig_price.add_trace(go.Scatter(x=hist.index, y=user_series, mode='lines', name=f"{ticker} Custom Overlay", line=dict(dash='dot')))
+        # --- Add event markers (annotations) ---
+        for event in events:
+            fig_price.add_shape(
+                type="line",
+                x0=event['date'], x1=event['date'],
+                y0=hist['Close'].min(), y1=hist['Close'].max(),
+                line=dict(color="red" if event['type']=="Earnings" else "blue", width=1, dash="dot"),
+                xref="x", yref="y"
+            )
+            fig_price.add_annotation(
+                x=event['date'],
+                y=hist['Close'].max(),
+                text=event['type'],
+                showarrow=True,
+                arrowhead=2,
+                ax=0,
+                ay=-40,
+                bgcolor="white",
+                bordercolor="black",
+                font=dict(size=10, color="black"),
+                hovertext=event['desc'],
+                hoverlabel=dict(bgcolor="white")
+            )
+    fig_price.update_layout(
+        title="Closing Prices & Indicator Overlays (Multi-Timeframe)",
+        xaxis_title="Date",
+        yaxis_title="Price (USD)",
+        template="plotly_white",
+        margin=dict(l=40, r=40, t=40, b=20)
+    )
+    st.plotly_chart(fig_price, use_container_width=True)
